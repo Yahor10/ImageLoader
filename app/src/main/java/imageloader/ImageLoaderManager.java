@@ -11,20 +11,15 @@ import java.util.concurrent.Executors;
  */
 public class ImageLoaderManager {
     static int availableProcessors = Runtime.getRuntime().availableProcessors();
-    static ExecutorService bitmapLoadservice  = availableProcessors > 2 ? Executors.newFixedThreadPool(availableProcessors - 1) : Executors.newFixedThreadPool(1);
+    ExecutorService bitmapLoadservice = availableProcessors > 2 ? Executors.newFixedThreadPool(availableProcessors - 1) : Executors.newFixedThreadPool(1);
 
-    public void loadImage(){
-        if(Thread.currentThread() == Looper.getMainLooper().getThread()){
+    public void submitLoadImage(Runnable runnable) {
+        if (Thread.currentThread() != Looper.getMainLooper().getThread()) {
             throw new IllegalArgumentException("wrong thread");
-
         }
 
-        bitmapLoadservice.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(null,"exec submit target" );
-            }
-        });
+        Log.v(null, "start submit");
+        bitmapLoadservice.submit(runnable);
     }
 
 }

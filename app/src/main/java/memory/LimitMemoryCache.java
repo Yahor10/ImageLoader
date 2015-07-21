@@ -3,14 +3,14 @@ package memory;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class LimitLruCache<K, V> implements MemoryCache<K, V> {
+public class LimitMemoryCache<K, V> implements MemoryCache<K, V> {
 
 	private long size;
 	private final long maxSize;
 
 	private final LinkedHashMap<K, V> contaner;
 
-	public LimitLruCache(int limit) {
+	public LimitMemoryCache(int limit) {
 		maxSize = limit;
 		size = 0;
 
