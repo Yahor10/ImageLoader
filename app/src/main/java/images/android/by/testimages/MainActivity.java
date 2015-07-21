@@ -125,26 +125,15 @@ public class MainActivity extends ListActivity {
         setContentView(R.layout.activity_main);
         final ListView listView = getListView();
 
-
-
-
-            // For this moment, you have list of songs and a ListView where you can display a list.
-            //But how can we put this data set to the list?
-            //This is where you need an Adapter
-
-            //context -  The current context.
-            //resource - The resource ID for a layout file containing a layout to use when instantiating views.
-            //textViewResourceId - The id of the TextView within the layout resource to be populated
-            //From the third parameter, you plugged the data set to adapter
-            ImageAdapter arrayAdapter = new ImageAdapter(this, songsArray);
-            listView.setAdapter(arrayAdapter);
+        ImageAdapter arrayAdapter = new ImageAdapter(this, songsArray);
+        listView.setAdapter(arrayAdapter);
     }
 
-    private final static class ImageAdapter extends ArrayAdapter<String>{
+    private final static class ImageAdapter extends ArrayAdapter<String> {
         final LayoutInflater mInflater;
-        private final String [] mImageArray;
+        private final String[] mImageArray;
 
-        public ImageAdapter(Context context,String[] songArray) {
+        public ImageAdapter(Context context, String[] songArray) {
             super(context, 0);
             mInflater = LayoutInflater.from(context);
             mImageArray = songArray;
@@ -163,20 +152,20 @@ public class MainActivity extends ListActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder = null;
-            if(convertView == null){
-                holder  =new ViewHolder();
+            if (convertView == null) {
+                holder = new ViewHolder();
                 final View inflate = mInflater.inflate(R.layout.item_list_image, null);
                 convertView = inflate;
                 holder.imageView = (ImageView) convertView.findViewById(R.id.image);
                 convertView.setTag(holder);
-            }else{
+            } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            ImageLoader.loadImage(mImageArray[position],holder.imageView,position);
+            ImageLoader.loadImage(mImageArray[position], holder.imageView);
             return convertView;
         }
 
-        private  static class ViewHolder {
+        private static class ViewHolder {
             ImageView imageView;
         }
     }

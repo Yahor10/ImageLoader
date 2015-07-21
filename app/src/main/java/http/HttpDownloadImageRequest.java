@@ -2,7 +2,6 @@ package http;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -38,7 +37,6 @@ public class HttpDownloadImageRequest {
     public Bitmap getBitmap(String url) {
         Bitmap bitmap = null;
         HttpURLConnection conn = null;
-        Log.v(null,"start http request" );
         try {
             URL imageUrl = new URL(url);
             conn = (HttpURLConnection) imageUrl.openConnection();

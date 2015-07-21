@@ -1,5 +1,7 @@
 package memory;
 
+import android.util.Log;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -13,7 +15,6 @@ public class LimitMemoryCache<K, V> implements MemoryCache<K, V> {
 	public LimitMemoryCache(int limit) {
 		maxSize = limit;
 		size = 0;
-
 		contaner = new LinkedHashMap<K, V>();
 
 	}
@@ -23,7 +24,6 @@ public class LimitMemoryCache<K, V> implements MemoryCache<K, V> {
 	      if (key == null || value == null) {
 	            throw new NullPointerException("key == null || value == null");
 	        }
-
 	        V previous;
 	        synchronized (this) {	            
 	            size += sizeOf(key, value);
@@ -32,9 +32,10 @@ public class LimitMemoryCache<K, V> implements MemoryCache<K, V> {
 	                size -= sizeOf(key, previous);
 	            }
 	        }
+		final boolean sizeAvailable =  (size + sizeOf(key, value) <= maxSize);
 
-	        trimToSize(maxSize);
-	        return previous != null;	    
+		trimToSize(maxSize);
+		return previous != null || sizeAvailable;
 	}
 
 	@Override
@@ -60,7 +61,7 @@ public class LimitMemoryCache<K, V> implements MemoryCache<K, V> {
 			throw new NullPointerException(key.getClass().getSimpleName()
 					+ " key == null ");
 		}
-		
+
 		V previous;
 		synchronized (this) {
 			previous = contaner.remove(key);
@@ -81,8 +82,7 @@ public class LimitMemoryCache<K, V> implements MemoryCache<K, V> {
 
 	@Override
 	public int sizeOf(K key, V value) {
-		// TODO Auto-generated method stub
-		throw new IllegalArgumentException("not implemented");		
+		throw new IllegalArgumentException("not implemented");
 	}
 
 	private void trimToSize(long maxSize) {
@@ -108,4 +108,9 @@ public class LimitMemoryCache<K, V> implements MemoryCache<K, V> {
 		}
 	}
 
+	@Override
+	public long size() {
+		Log.v(null, "container size" + contaner.size());
+		return size;
+	}
 }

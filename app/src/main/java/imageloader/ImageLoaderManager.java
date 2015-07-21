@@ -1,7 +1,6 @@
 package imageloader;
 
 import android.os.Looper;
-import android.util.Log;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,7 +17,6 @@ public class ImageLoaderManager {
             throw new IllegalArgumentException("wrong thread");
         }
 
-        Log.v(null, "start submit");
         bitmapLoadservice.submit(runnable);
     }
 

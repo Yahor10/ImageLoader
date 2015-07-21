@@ -12,4 +12,7 @@ public interface MemoryCache <K,E> {
 	void clear();
 	
 	int sizeOf(K key, E value) ;
+
+	long size();
+
 }
